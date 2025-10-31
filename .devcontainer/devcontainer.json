@@ -1,0 +1,57 @@
+{
+  "name": "nextjs",
+  "dockerComposeFile": "../compose.yml",
+  "service": "next",
+  "workspaceFolder": "/app",
+  "runServices": ["next"],
+  "shutdownAction": "stopCompose",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Next.js 15 dev server",
+      "onAutoForward": "notify"
+    }
+  },
+  "containerEnv": {
+    "NEXT_TELEMETRY_DISABLED": "1",
+    "TURBOPACK": "1"
+  },
+  "remoteEnv": {
+    "NEXT_TELEMETRY_DISABLED": "1"
+  },
+  "postCreateCommand": "pnpm install",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "eslint.useFlatConfig": true,
+        "eslint.workingDirectories": ["."],
+        "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+        "typescript.tsserver.maxTsServerMemory": 4096,
+        "files.exclude": {
+          "**/.next": true
+        },
+        "files.watcherExclude": {
+          "**/.next/**": true,
+          "**/.turbo/**": true
+        }
+      },
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "bradlc.vscode-tailwindcss",
+        "yoavbls.pretty-ts-errors",
+        "streetsidesoftware.code-spell-checker",
+        "dsznajder.es7-react-js-snippets",
+        "styled-components.vscode-styled-components",
+        "formulahendry.auto-rename-tag",
+        "christian-kohler.path-intellisense",
+        "usernamehw.errorlens",
+        "meganrogge.template-string-converter",
+        "ms-vscode.vscode-typescript-next"
+      ]
+    }
+  },
+  "remoteUser": "root"
+}

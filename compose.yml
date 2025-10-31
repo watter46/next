@@ -1,0 +1,28 @@
+volumes:
+  node_modules:
+  nextjs_cache:
+
+services:
+  next:
+    build:
+      context: .
+      dockerfile: docker/next/Dockerfile
+      target: development
+    container_name: next
+    ports:
+      - "3000:3000"
+    volumes:
+      # プロジェクトルート全体をマウント（cached で高速化）
+      - .:/app:cached
+      # node_modulesとキャッシュは名前付きボリュームで分離（重要）
+      - node_modules:/app/node_modules
+      - nextjs_cache:/app/.next
+    environment:
+      - NODE_ENV=development
+      # ホットリロード最適化
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+      # Turbopack有効化（Next.js 15+）
+      - TURBOPACK=1
+    stdin_open: true
+    tty: true
